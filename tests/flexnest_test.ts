@@ -30,7 +30,7 @@ Clarinet.test({
 });
 
 Clarinet.test({
-  name: "Can subscribe to an existing plan",
+  name: "Can subscribe to an existing plan and cancel subscription",
   async fn(chain: Chain, accounts: Map<string, Account>) {
     const deployer = accounts.get("deployer")!;
     const wallet1 = accounts.get("wallet_1")!;
@@ -43,9 +43,36 @@ Clarinet.test({
       Tx.contractCall("flexnest", "subscribe",
         [types.uint(1)],
         wallet1.address
+      ),
+      Tx.contractCall("flexnest", "cancel-subscription",
+        [],
+        wallet1.address
       )
     ]);
 
     assertEquals(block.receipts[1].result, '(ok true)');
+    assertEquals(block.receipts[2].result, '(ok true)');
+  },
+});
+
+Clarinet.test({
+  name: "Contract pause functionality works correctly",
+  async fn(chain: Chain, accounts: Map<string, Account>) {
+    const deployer = accounts.get("deployer")!;
+    const wallet1 = accounts.get("wallet_1")!;
+
+    let block = chain.mineBlock([
+      Tx.contractCall("flexnest", "toggle-contract-pause",
+        [],
+        deployer.address
+      ),
+      Tx.contractCall("flexnest", "create-plan",
+        [types.ascii("Basic Plan"), types.uint(100), types.uint(2592000)],
+        deployer.address
+      )
+    ]);
+
+    assertEquals(block.receipts[0].result, '(ok true)');
+    assertEquals(block.receipts[1].result, '(err u105)');
   },
 });
