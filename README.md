@@ -12,6 +12,32 @@ This system allows users to:
 - Flexible payment periods
 - Automatic renewal system
 - Subscription status tracking
+- Contract pause mechanism
+- Event logging system
+- Subscription cancellation
+- Plan modification capabilities
+- STX payment integration
+
+## Functions
+### Admin Functions
+- `create-plan`: Create new subscription plans
+- `update-plan`: Modify existing plans
+- `toggle-contract-pause`: Pause/unpause contract operations
+
+### User Functions
+- `subscribe`: Subscribe to an available plan
+- `cancel-subscription`: Cancel active subscription
+- `get-subscription`: View subscription details
+- `get-plan`: View plan details
+- `get-contract-status`: Check if contract is active
+- `get-event`: View event details
+
+## Security Features
+- Owner-only administrative functions
+- Contract pause mechanism
+- Event logging for important actions
+- Payment validation
+- Subscription state validation
 
 ## Usage
-[Include usage instructions here]
+[Detailed usage instructions to be added]
